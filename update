@@ -2,6 +2,7 @@
 
 # Update command for MacOS
 # script to be put in /usr/local/bin/update
+# The '-f' option performs a full brew cask update (sometimes brew outdated packages list is irrelevant)
 
 # Package managers installation
 type brew >/dev/null 2>&1 || { /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; }
@@ -11,6 +12,10 @@ type mas >/dev/null 2>&1 || { brew install mas; }
 # Update
 brew update
 brew upgrade
-brew cask outdated|xargs brew cask reinstall
+if [ ! -z $1 ] && [ $1 == "-f" ]; then
+    brew cask list|xargs brew cask reinstall
+else
+    brew cask outdated|xargs brew cask reinstall
+fi
 softwareupdate -ia
 mas upgrade
