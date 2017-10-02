@@ -15,7 +15,7 @@ brew upgrade
 if [ ! -z $1 ] && [ $1 == "-f" ]; then
     brew cask list|xargs brew cask reinstall
 else
-    brew cask outdated|xargs brew cask reinstall
+    brew cask outdated --greedy|xargs brew cask reinstall
 fi
 softwareupdate -ia
 mas upgrade
